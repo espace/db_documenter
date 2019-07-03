@@ -3,9 +3,11 @@ module DatabaseDocumenter::TablesSql
 
   def self.generate
     tables_sql = {}
-
-    ActiveRecord::Tasks::MySQLDatabaseTasks.new(Rails.configuration.database_configuration['development']).structure_dump('database.sql')
-
+    if Rails.version.split(".")[0].to_i == 4
+      ActiveRecord::Tasks::MySQLDatabaseTasks.new(Rails.configuration.database_configuration['development']).structure_dump('database.sql')
+    else
+      ActiveRecord::Tasks::MySQLDatabaseTasks.new(Rails.configuration.database_configuration['development']).structure_dump('database.sql', {})
+    end
     all_tabels_sql = IO.read('database.sql')
     all_tabels_sql = all_tabels_sql.split(';').select { |line| line.match(/CREATE/)}
 

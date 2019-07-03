@@ -16,7 +16,7 @@ task generate_db_document: :environment do
     docx.p "The database design specifies how the date of the software is going to be stored."
 
     ActiveRecord::Base.descendants.each do |klass|
-      break if klass.class_name != klass.base_class.class_name # Ignore STI classes
+      next if (klass.class_name != klass.base_class.class_name) || klass.abstract_class? || klass == ActiveAdmin::Comment # Ignore STI classes
 
       table_comment = DatabaseDocumenter::DatabaseComment.read_table_comment(klass.table_name)
 
@@ -25,7 +25,7 @@ task generate_db_document: :environment do
       docx.hr
 
       table_name = ["Table Name", klass.table_name]
-      description = ["Description", table_comment.empty? ? "A collection of data related to #{klass.table_name.titleize}" : table_comment ]
+      description = ["Description", (table_comment.nil? || table_comment.empty?) ? "A collection of data related to #{klass.table_name.titleize}" : table_comment ]
       primary_key = ["Primary Key", klass.primary_key]
       sql_code = ["SQL Code", tables_sql[klass.table_name]]
 

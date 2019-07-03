@@ -23,7 +23,7 @@ class DatabaseDocumenter::DatabaseComment
       AND `table_schema` = '#{database_name}';
     SQL
 
-    ActiveRecord::Base.connection.execute(select_comment).to_a[0][0]
+    ActiveRecord::Base.connection.execute(select_comment).to_a.try('[]', 0).try('[]', 0)
   end
 
   def self.database_name
