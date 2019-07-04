@@ -17,7 +17,7 @@ You can override it by adding comment to your schema using one of the following 
 ### Rails 4
 use [migration comments](https://github.com/pinnymz/migration_comments) gem or [pg_comment](https://github.com/albertosaurus/pg_comment)
 
-### Rails 5
+### Rails 5.2
 use `change_column_comment` and `change_table_comment` methods in rails 5
 
 ## Usage
