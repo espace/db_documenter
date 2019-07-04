@@ -15,8 +15,12 @@ task generate_db_document: :environment do
     docx.h1 "Database Design"
     docx.p "The database design specifies how the date of the software is going to be stored."
 
+    printed_tables = []
     ActiveRecord::Base.descendants.each do |klass|
       next if (klass.class_name != klass.base_class.class_name) || klass.abstract_class? || klass == ActiveAdmin::Comment # Ignore STI classes
+
+      next if printed_tables.include? klass.table_name # Skip duplicate tables in case of has_and_belongs_to_many
+      printed_tables << klass.table_name
 
       table_comment = DatabaseDocumenter::DatabaseComment.read_table_comment(klass.table_name)
 
