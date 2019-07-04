@@ -60,8 +60,14 @@ task generate_db_document: :environment do
 
         if dont_display_columns.include?(col.name)
           column_data << 'Data is hidden/removed'
+        elsif sample_record.nil?
+          column_data << ''
         else
-          column_data << (sample_record.nil? ? '' : sample_record[col.name])
+          if Rails.version.split(".")[0].to_i == 4
+            column_data << sample_record[col.name]
+          else
+            column_data << sample_record.send("#{col.name}_before_type_cast")
+          end
         end
 
         columns << column_data
