@@ -20,6 +20,9 @@ task generate_db_document: :environment do
       next if (klass.class_name != klass.base_class.class_name) || klass.abstract_class? || klass == ActiveAdmin::Comment # Ignore STI classes
 
       next if printed_tables.include? klass.table_name # Skip duplicate tables in case of has_and_belongs_to_many
+
+      next if DatabaseDocumenter.configuration.skipped_modules.include? klass.parent.name
+
       printed_tables << klass.table_name
 
       table_comment = DatabaseDocumenter::DatabaseComment.read_table_comment(klass.table_name)
@@ -60,7 +63,7 @@ task generate_db_document: :environment do
 
         column_data << col.type
 
-        dont_display_columns = ['encrypted_password', 'current_sign_in_ip', 'remote_address', 'last_sign_in_ip']
+        dont_display_columns = DatabaseDocumenter.configuration.dont_display_columns
 
         if dont_display_columns.include?(col.name)
           column_data << 'Data is hidden/removed'
