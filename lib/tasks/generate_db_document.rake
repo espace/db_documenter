@@ -13,7 +13,7 @@ task generate_db_document: :environment do
     end
 
     docx.h1 "Database Design"
-    docx.p "The database design specifies how the date of the software is going to be stored."
+    docx.p "The database design specifies how the data of the software is going to be stored."
 
     printed_tables = []
     ActiveRecord::Base.descendants.each do |klass|
