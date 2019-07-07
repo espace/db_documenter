@@ -16,6 +16,8 @@ task generate_db_document: :environment do
     docx.p "The database design specifies how the data of the software is going to be stored."
 
     printed_tables = []
+    generated_col_description = 0
+    col_description_from_comments = 0
     ActiveRecord::Base.descendants.each do |klass|
       next if (klass.class_name != klass.base_class.class_name) || klass.abstract_class? || klass == ActiveAdmin::Comment # Ignore STI classes
 
@@ -50,6 +52,7 @@ task generate_db_document: :environment do
       klass.columns.each do |col|
         column_data = [col.name]
         if columns_comments[col.name].present?
+          col_description_from_comments +=1
           broken_cell_para = Caracal::Core::Models::TableCellModel.new do |c|
             columns_comments[col.name].split("<br/>").each do |s|
               c.p s
@@ -57,7 +60,7 @@ task generate_db_document: :environment do
           end
           column_data << broken_cell_para
         else
-
+          generated_col_description +=1
           column_data << DatabaseDocumenter::ColumnDescription.generate(col.name, col.type, klass)
         end
 
@@ -85,5 +88,7 @@ task generate_db_document: :environment do
       end
       docx.page
     end
+    puts "Number of columns with generated description #{generated_col_description}"
+    puts "Number of columns with description from comments #{col_description_from_comments}"
   end
 end
