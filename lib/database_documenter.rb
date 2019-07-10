@@ -1,6 +1,9 @@
 require 'database_documenter/configuration'
 require "database_documenter/version"
 require 'database_documenter/database_comment'
+require 'database_documenter/database_comment/base_database_comment'
+require 'database_documenter/database_comment/mysql_database_comment'
+require 'database_documenter/database_comment/postgres_database_comment'
 require 'database_documenter/tables_sql'
 require 'database_documenter/column_description'
 require 'caracal'

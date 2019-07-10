@@ -5,7 +5,9 @@ task generate_db_document: :environment do
   Rails.application.eager_load!
 
   tables_sql = DatabaseDocumenter::TablesSql.generate
+  
   Caracal::Document.save 'database.docx' do |docx|
+    database_comment_class = DatabaseDocumenter::DatabaseComment.get_comment_class
 
     docx.page_numbers true do
       align 'center'
@@ -27,7 +29,7 @@ task generate_db_document: :environment do
 
       printed_tables << klass.table_name
 
-      table_comment = DatabaseDocumenter::DatabaseComment.read_table_comment(klass.table_name)
+      table_comment = database_comment_class.read_table_comment(klass.table_name)
 
       docx.p ''
       docx.h2 "#{klass.table_name} schema"
@@ -48,7 +50,7 @@ task generate_db_document: :environment do
       columns_header = ["Attribute", "Description", "Type", "Example of values"]
       columns = []
       sample_record = klass.first
-      columns_comments = DatabaseDocumenter::DatabaseComment.read_columns_comment(klass.table_name)
+      columns_comments = database_comment_class.read_columns_comment(klass.table_name)
       klass.columns.each do |col|
         column_data = [col.name]
         if columns_comments[col.name].present?
@@ -66,9 +68,9 @@ task generate_db_document: :environment do
 
         column_data << col.type
 
-        dont_display_columns = DatabaseDocumenter.configuration.dont_display_columns
+        hidden_values_columns = DatabaseDocumenter.configuration.hidden_values_columns
 
-        if dont_display_columns.include?(col.name)
+        if hidden_values_columns.include?(col.name)
           column_data << 'Data is hidden/removed'
         elsif sample_record.nil?
           column_data << ''

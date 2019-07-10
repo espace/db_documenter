@@ -1,32 +1,15 @@
-# frozen_string_literal: true
-# A tiny class for reading column database comments
-class DatabaseDocumenter::DatabaseComment
+module DatabaseDocumenter
+  module DatabaseComment
+    def self.get_comment_class(adapter = get_current_adapter)
+      if  adapter == "postgresql"
+        DatabaseDocumenter::DatabaseComment::PostgresDatabaseComment
+      else
+        DatabaseDocumenter::DatabaseComment::MysqlDatabaseComment
+      end
+    end
 
-  def self.read_columns_comment(table_name)
-
-    select_comment = <<-SQL
-      SELECT `column_name`, `column_comment`
-      FROM `information_schema`.`COLUMNS`
-      WHERE `table_name` = '#{table_name}'
-      AND `table_schema` = '#{database_name}'
-      AND `column_comment` != '';
-    SQL
-
-    ActiveRecord::Base.connection.execute(select_comment).to_h
-  end
-
-  def self.read_table_comment(table_name)
-    select_comment = <<-SQL
-      SELECT `TABLE_COMMENT`
-      FROM `information_schema`.`TABLES`
-      WHERE `TABLE_NAME` = '#{table_name}'
-      AND `table_schema` = '#{database_name}';
-    SQL
-
-    ActiveRecord::Base.connection.execute(select_comment).to_a.try('[]', 0).try('[]', 0)
-  end
-
-  def self.database_name
-  	Rails.application.config.database_configuration[Rails.env]['database'].freeze
+    def self.get_current_adapter
+      DatabaseDocumenter.configuration.database_configuration['adapter']
+    end
   end
 end
