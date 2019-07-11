@@ -7,7 +7,8 @@ Gem::Specification.new do |spec|
   spec.name          = "database_documenter"
   spec.version       = DatabaseDocumenter::VERSION
   spec.authors       = ["Ahmed Yehia"]
-  spec.email         = ["ahmed.yehia311@gmail.com"]
+  spec.email         = ["ruby@espace.com.eg"]
+  spec.homepage    = "https://github.com/espace/db_documenter"
 
   spec.summary       = %q{Generate Database Documentation as a word document}
   spec.description   = %q{Generate Database Documentation as a word document}
