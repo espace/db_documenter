@@ -21,22 +21,26 @@ And then execute:
 
     $ bundle install
 
+## Configuration
+
+To generate the gem configuration file run this rake task in the application directory 
+
+    $ bundle exec rake generate_dd_initializer
+
+or create the configuration file manually in this path `config/initializers/database_documenter.rb` :
+
+```ruby
+DatabaseDocumenter.configure do |config|
+  config.skipped_modules = %w(NAMESPACE)
+  config.hidden_values_columns = %w(col1 col2)
+end
+``` 
+
 ## Usage
 
 in the application folder run this rake task and then you will found word document named `database.docx` in your application folder:
 
     $ bundle exec rake generate_db_document
-
-## Configuration
-
-Create a file in your initializers folder for example name it `database_documenter.rb` and you can configure the gem like this.
-
-```ruby
-DatabaseDocumenter.configure do |config|
-  config.skipped_modules = ['NAMESPACE']
-  config.hidden_values_columns = ['col1', 'col2']
-end
-```
 
 ## Override generated description
 You can override it by adding comment to your schema using one of the following options:
