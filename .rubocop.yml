@@ -1,0 +1,84 @@
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  TargetRubyVersion: 2.5
+  Exclude:
+    - "bin/*"
+    - Gemfile
+
+Layout/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+
+Metrics/ClassLength:
+  Exclude:
+    - "spec/**/*"
+
+Metrics/MethodLength:
+  Max: 30
+  Exclude:
+    - "spec/**/*"
+
+Metrics/LineLength:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  EnforcedStyleForLeadingUnderscores: optional
+
+Naming/VariableNumber:
+  Enabled: false
+
+Rails:
+  Enabled: true
+
+Rails/ApplicationRecord:
+  Exclude:
+    - "db/migrate/**"
+
+Rails/RefuteMethods:
+  Enabled: false
+
+Rails/Validation:
+  Enabled: false
+
+Style/BarePercentLiterals:
+  EnforcedStyle: percent_q
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/TrivialAccessors:
+  AllowPredicates: true
+
+Style/RescueStandardError:
+  Enabled: false
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false

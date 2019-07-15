@@ -1,0 +1,37 @@
+gemfile: Gemfile
+
+PreCommit:
+  BundleCheck:
+    enabled: true
+
+  FixMe:
+    enabled: true
+    keywords: ["FIXME"]
+    exclude:
+      - .overcommit.yml
+
+  LocalPathsInGemfile:
+    enabled: true
+
+  RailsSchemaUpToDate:
+    enabled: false
+
+  RuboCop:
+    enabled: true
+    on_warn: fail
+
+  TrailingWhitespace:
+    enabled: true
+    exclude:
+      - "**/db/structure.sql"
+
+  YamlSyntax:
+    enabled: true
+
+  HardTabs:
+    enabled: true
+
+PrePush:
+  RSpec:
+    enabled: true
+    command: ['xvfb-run', '-a', 'bundle', 'exec', 'rspec']

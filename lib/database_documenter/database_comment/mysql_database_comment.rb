@@ -1,8 +1,6 @@
 module DatabaseDocumenter
   class DatabaseComment::MysqlDatabaseComment < DatabaseComment::BaseDatabaseComment
-
     def self.read_columns_comment(table_name)
-
       select_comment = <<-SQL
         SELECT `column_name`, `column_comment`
         FROM `information_schema`.`COLUMNS`

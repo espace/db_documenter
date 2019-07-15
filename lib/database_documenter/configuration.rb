@@ -4,7 +4,7 @@ module DatabaseDocumenter
 
     def initialize
       @skipped_modules = []
-      @hidden_values_columns = ['encrypted_password', 'current_sign_in_ip', 'remote_address', 'last_sign_in_ip']
+      @hidden_values_columns = %w[encrypted_password current_sign_in_ip remote_address last_sign_in_ip]
       @database_configuration = Rails.application.config.database_configuration[Rails.env]
       @footer = ''
     end
