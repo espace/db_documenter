@@ -1,23 +1,10 @@
 # frozen_string_literal: true
 
 module DatabaseDocumenter::Exporters
-  class ExportToWord
-    attr_accessor :table_data, :printed_tables, :generated_cols_count, :commented_cols_count
-
-    def initialize
-      self.table_data = DatabaseDocumenter::TableData.new
-      self.printed_tables = []
-      self.generated_cols_count = 0
-      self.commented_cols_count = 0
-    end
-
+  class ExportToWord < BaseExporter
     def call
       load_all_models
       generate_word_document
-    end
-
-    def load_all_models
-      Rails.application.eager_load!
     end
 
     def generate_word_document
@@ -26,9 +13,6 @@ module DatabaseDocumenter::Exporters
         add_word_footer(docx)
 
         ActiveRecord::Base.descendants.each do |klass|
-          # Skip STI classes
-          # Skip duplicate tables in case of has_and_belongs_to_many
-          # Skip certain modules
           next if skip_class?(klass)
 
           printed_tables << klass.table_name
@@ -51,8 +35,8 @@ module DatabaseDocumenter::Exporters
     end
 
     def add_word_header(docx)
-      docx.h1 "Database Design"
-      docx.p "The database design specifies how the data of the software is going to be stored."
+      docx.h1 "#{APP_NAME} Database Design"
+      docx.p HEADER_SECOND_LINE
     end
 
     def skip_class?(klass)

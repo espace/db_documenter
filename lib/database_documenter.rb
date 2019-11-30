@@ -7,7 +7,9 @@ require 'database_documenter/database_comment/postgres_database_comment'
 require 'database_documenter/tables_sql'
 require 'database_documenter/column_description'
 require 'database_documenter/table_data'
+require 'database_documenter/exporters/base_exporter'
 require 'database_documenter/exporters/export_to_word'
+require 'database_documenter/exporters/export_to_md'
 require 'caracal'
 require "database_documenter/railtie" if defined?(Rails)
 
