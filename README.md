@@ -4,7 +4,7 @@ Welcome to Database Documenter gem! We created this gem to generate database doc
 
 ## Features
 
-1. Generate database documentation as a Word document.
+1. Generate database documentation as a `Word document` or `Markdown file`.
 2. Generate Description for columns based on it is type and name, Also handle Enums and STI and AASM.
 3. Easy to change the generated description by adding a comment on your database.
 4. Hide sample values of desired columns using configuration.
@@ -39,9 +39,17 @@ end
 
 ## Usage
 
-in the application folder run this rake task and then you will found word document named `database.docx` in your application folder:
+### To Generate the Word document
+
+In the application directory run this rake task and then you will find a word document named `database.docx` in your application directory:
 
     $ bundle exec rake generate_db_document
+
+### To Generate the Markdown file
+
+Run the following rake task and then you will find a markdown file named `database.md` in your application directory:
+
+    $ bundle exec rake generate_db_md_document
 
 ## Override generated description
 You can override it by adding comment to your schema using one of the following options:
@@ -63,3 +71,4 @@ use `change_column_comment` and `change_table_comment` methods in rails 5
 
 - Generate the ERD with the file.
 - Add test cases.
+- Update `DatabaseDocumenter::TableDat`a to return the `sql_code` as a `String`.
