@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    database_documenter (0.1.8)
+    database_documenter (0.1.9)
       caracal (= 1.4.1)
 
 GEM
