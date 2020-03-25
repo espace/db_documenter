@@ -34,4 +34,4 @@ PreCommit:
 PrePush:
   RSpec:
     enabled: true
-    command: ['xvfb-run', '-a', 'bundle', 'exec', 'rspec']
+    command: ['bundle', 'exec', 'rspec']
