@@ -40,7 +40,7 @@ module DatabaseDocumenter::Exporters
     end
 
     def skip_class?(klass)
-      (klass.class_name != klass.base_class.class_name) || klass.abstract_class? ||
+      (klass.class.name != klass.base_class.class.name) || klass.abstract_class? ||
         (printed_tables.include? klass.table_name) || (DatabaseDocumenter.configuration.skipped_modules.include? klass.parent.name)
     end
 
