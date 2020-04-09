@@ -4,7 +4,7 @@ module DatabaseDocumenter::Exporters
   class BaseExporter
     attr_accessor :table_data, :printed_tables, :generated_cols_count, :commented_cols_count
 
-    APP_NAME = ENV['APP_NAME'].capitalize
+    APP_NAME = ENV['APP_NAME']&.capitalize || "Project"
     HEADER_SECOND_LINE = "The database design specifies how the data of the software is going to be stored."
 
     def initialize
@@ -22,7 +22,7 @@ module DatabaseDocumenter::Exporters
     # Skip duplicate tables in case of has_and_belongs_to_many
     # Skip certain modules
     def skip_class?(klass)
-      (klass.class_name != klass.base_class.class_name) || klass.abstract_class? ||
+      (klass.class.name != klass.base_class.class.name) || klass.abstract_class? ||
         (printed_tables.include? klass.table_name) || (DatabaseDocumenter.configuration.skipped_modules.include? klass.parent.name)
     end
   end
