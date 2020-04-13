@@ -58,10 +58,14 @@ class DatabaseDocumenter::TableData
                           elsif sample_record.nil?
                             ''
                           elsif Rails.version.split(".")[0].to_i == 4
-                            sample_record[col.name]
+                            clean_html_column_data(sample_record[col.name])
                           else
-                            sample_record.send("#{col.name}_before_type_cast")
+                            clean_html_column_data(sample_record.send("#{col.name}_before_type_cast"))
                           end
     column_data
+  end
+
+  def clean_html_column_data(column_data)
+    column_data.is_a?(String) ? column_data.gsub(/(?:\n\r?|\r\n?)/, '<br>').strip : column_data
   end
 end

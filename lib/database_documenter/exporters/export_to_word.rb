@@ -47,7 +47,7 @@ module DatabaseDocumenter::Exporters
     def generate_table_metadata(docx, klass)
       metadata = table_data.get_meta_data(klass)
       docx.p ''
-      docx.h2 "#{klass.table_name} schema"
+      docx.h2 klass.table_name.to_s
       docx.hr
 
       word_table = [
